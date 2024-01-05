@@ -9,7 +9,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -sha256 \
 	-subj "/C=FR/ST=Ile-De-France/L=Paris/O=42/OU=42Paris/CN=alboumed"
 
 
-COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./conf/nginx.conf /etc/nginx/conf.d
 
 EXPOSE 443
 
