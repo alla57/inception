@@ -1,7 +1,7 @@
 FROM debian:buster
 
 RUN apt-get update && \
-    apt-get install -y mariadb-server mariadb-client
+    apt-get install -y mariadb-client mariadb-server
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d
 COPY ./tools/create_db.sh /usr/local/bin/

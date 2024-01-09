@@ -2,16 +2,14 @@
 
 service mysql start
 
-mysql -e "CREATE USER IF NOT EXISTS \`${DB_USER}\`@'localhost' IDENTIFIED BY '${DB_PASSWORD}';"
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"
+echo "CREATE DATABASE IF NOT EXISTS $DB_NAME;" | mysql
+mysql -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
+echo "user created"
+
+mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
+echo "privilges granted to user"
+mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$DB_ROOT_PASSWORD';"
+echo "privilges granted to root"
 mysql -e "FLUSH PRIVILEGES;"
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
-mysqladmin -u root -p$DB_ROOT_PASSWORD shutdown
-
-exec mysqld_safe
-
-mysql -e "FLUSH PRIVILEGES;"
-
-mysqladmin -u root -p$DB_ROOT_PASSWORD shutdown
-
-exec mysqld_safe
+kill $(cat /var/run/mysqld/mysqld.pid)
+mysqld

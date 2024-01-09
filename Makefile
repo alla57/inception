@@ -1,17 +1,24 @@
 all:
-	@sudo mkdir -p /home/allab/data/mariadb_volume /home/allab/data/wp_volume
-	@docker-compose -f ./srcs/docker-compose.yml up --build -d
+	@sudo mkdir -p /home/alboumed/data/mariadb_volume /home/alboumed/data/wp_volume
+	@sudo docker compose -f ./srcs/docker-compose.yml up --build -d
 	
-restart :
-	@docker-compose -f ./srcs/docker-compose.yml stop
-	@docker-compose -f ./srcs/docker-compose.yml start
+restart:
+	@sudo docker compose -f ./srcs/docker-compose.yml stop
+	@sudo docker compose -f ./srcs/docker-compose.yml start
+
+stop:
+	@sudo docker compose -f ./srcs/docker-compose.yml stop
 
 down:
-	@docker-compose -f ./srcs/docker-compose.yml down
+	@sudo docker compose -f ./srcs/docker-compose.yml down
 
 clean:
-	@docker rm -f $$(docker ps -qa)
-	@docker volume rm -f $$(docker volume ls)
-	@sudo rm -rf /home/allab/data
+	@sudo docker compose -f ./srcs/docker-compose.yml stop
+	@sudo docker compose -f ./srcs/docker-compose.yml rm
+	@sudo docker volume rm mariadb_volume wp_volume
+	@sudo sudo rm -rf /home/alboumed/data
+	@sudo docker rmi -f $$(sudo docker images -aq)
+
+re: clean all
 
 .PHONY: all clean fclean re

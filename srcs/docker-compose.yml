@@ -5,7 +5,8 @@ services:
     build: ./requirements/mariadb
     volumes:
       - mariadb_volume:/var/lib/mysql
-    env_file: .env
+    env_file:
+      - .env
     networks:
       - mynetwork
     restart: always
@@ -39,13 +40,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/allab/data/wp_volume
+      device: /home/alboumed/data/wp_volume
   mariadb_volume:
     name: mariadb_volume
     driver: local
     driver_opts:
       type: 'none'
       o: bind
-      device: /home/allab/data/mariadb_volume
+      device: /home/alboumed/data/mariadb_volume
 networks:
   mynetwork:
