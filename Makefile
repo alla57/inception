@@ -6,6 +6,9 @@ restart:
 	@sudo docker compose -f ./srcs/docker-compose.yml stop
 	@sudo docker compose -f ./srcs/docker-compose.yml start
 
+start:
+	@sudo docker compose -f ./srcs/docker-compose.yml start
+
 stop:
 	@sudo docker compose -f ./srcs/docker-compose.yml stop
 
